@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/AutomFramwSerenity.iml" filepath="$PROJECT_DIR$/.idea/AutomFramwSerenity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/AutomFrameworrkStaffWizard.iml" filepath="$PROJECT_DIR$/.idea/AutomFrameworrkStaffWizard.iml" />
       <module fileurl="file://$PROJECT_DIR$/CucumberTestMooc/serenitycucmbertestsmooc-master/serenitycucmbertestsmooc.iml" filepath="$PROJECT_DIR$/CucumberTestMooc/serenitycucmbertestsmooc-master/serenitycucmbertestsmooc.iml" />
     </modules>
   </component>
