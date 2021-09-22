@@ -169,25 +169,28 @@ public class PayrollPage extends PageObject {
     }
 
     public void openDropDownMenuArrow() {
-       if (dropDownMenuArrowList.get(dropDownMenuArrowList.size()-1).isDisplayed()) {
-            for (int i = 0; i < dropDownMenuArrowList.size(); i++) {
-                if (i==checkNumber) {
-                    basicInteractions.clickIfListOfElementsDisplayed(i, dropDownMenuArrowList,dropDownMenuArrowList.size()-1,
-                                        "dropDownMenuArrow for last payroll is not clickable");
-                    break;
+        firstPayrollCheckDate.shouldBeVisible();
+        for (int i = 0; i < dropDownMenuArrowList.size(); i++) {
+            if (i==checkNumber) {
+                if (firstPayrollCheckDate.isDisplayed()) {
+                    dropDownMenuArrowList.get(i).click();
                 } else {
-                    continue;
+                    System.out.println("firstPayrollCheckDate is not Displayed");
                 }
+                break;
+            } else {
+                continue;
             }
-        } else {
-            System.out.println("dropDownMenuArrow for last payroll is not clickable");
         }
     }
 
     public void openDropDownMenuGearForLastPayroll() {
-        payrollDateList.get(payrollDateList.size()-1).isDisplayed();
-        basicInteractions.clickIfGivenElementOfListDisplayed(dropDownMenuGearList.get(0),
-                "dropDownMenuGear for last payroll is not clickable");
+        lastPayrollCheckDate.shouldBeVisible();
+        if (dropDownMenuGearList.get(0).isDisplayed()) {
+            dropDownMenuGearList.get(0).click();
+        } else {
+            System.out.println("dropDownMenuGearList for last payroll is not clickable");
+        }
     }
 
     public void selectCreatePayrollChecks(){
@@ -313,7 +316,6 @@ public class PayrollPage extends PageObject {
             if (nextButton.isCurrentlyVisible()) {
                 nextButton.click();
                 count = count + payrollDateList.size();
-                //System.out.println("Number of payrolls " + count);
             } else {
                 System.out.println("NextButton is not clickable");
             }

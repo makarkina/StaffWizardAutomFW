@@ -43,9 +43,6 @@ public class AddPayrollForm extends PageObject {
         String trPeriodBeginDate = delNoDig(payrollPage.estNewPeriodBeginDate);
         String trPeriodEndDate = delNoDig(payrollPage.estNewPeriodEndDate);
 
-        System.out.println("trPeriodBeginDate "+ trPeriodBeginDate);
-        System.out.println("trPeriodEndDate "+ trPeriodEndDate);
-
         beginDateField.sendKeys(trPeriodBeginDate);
         endDateField.sendKeys(trPeriodEndDate);
         checkDateField.sendKeys(trPeriodEndDate);
