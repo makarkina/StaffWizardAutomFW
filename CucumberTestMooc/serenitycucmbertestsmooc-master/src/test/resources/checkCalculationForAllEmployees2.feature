@@ -8,7 +8,7 @@ Feature:
 
   Scenario Outline: Check calculation for all employee using Start New Payroll button
 
-    When user gets dates for last payroll
+    When user gets dates for last payroll 
     And user creates next payroll on Payroll screen
     And user refreshes Payroll screen
 
