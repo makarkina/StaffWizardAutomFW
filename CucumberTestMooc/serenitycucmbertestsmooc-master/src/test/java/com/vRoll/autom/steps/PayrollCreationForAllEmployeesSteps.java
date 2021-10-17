@@ -1,9 +1,11 @@
 package com.vRoll.autom.steps;
 
 import com.vRoll.autom.forms.AddPayrollForm;
+import com.vRoll.autom.forms.EditPayrollCheck;
 import com.vRoll.autom.pages.LoginPage;
 import com.vRoll.autom.pages.MainPage;
 import com.vRoll.autom.pages.PayrollPage;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -14,20 +16,17 @@ import java.text.ParseException;
 public class PayrollCreationForAllEmployeesSteps {
 
     PayrollPage payrollPage;
-    AddPayrollForm addPayrollForm;
-
 
     @Step
     @Then("^user gets dates for last payroll$")
     public void userGetsLastPayrollDate() throws Exception {
         payrollPage.selectLastPayrollDates();
+
     }
 
     @Step
     @When("^user creates next payroll on Payroll screen$")
     public void userCreatesNextPayroll() throws Exception {
-        //payrollPage.openDropDownMenuGear();
-        //payrollPage.selectCreateNextPayroll();
         payrollPage.createNextPayroll();
     }
 
@@ -59,5 +58,15 @@ public class PayrollCreationForAllEmployeesSteps {
     @Then("^user verifies Period End Date for new payroll$")
     public void userVerifiesPeriodEndDate() throws ParseException {
         payrollPage.verifyPeriodEndDate();
+    }
+
+    @And("^user verifies a pay frequency for last payroll (.*)$")
+    public void userVerifiesPayFrequency(String payFrequency) {
+        payrollPage.verifyPayFrequencyForLastPayroll(payFrequency);
+    }
+
+    @And("^user verifies a pay frequency for given payroll date (.*)$")
+    public void userVerifiesPayFrequencyForGivenPayrollDate(String payFrequency) {
+        payrollPage.verifyPayFrequency(payFrequency);
     }
 }

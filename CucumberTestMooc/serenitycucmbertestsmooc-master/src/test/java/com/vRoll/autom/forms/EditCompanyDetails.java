@@ -11,8 +11,10 @@ import java.util.List;
 
 public class EditCompanyDetails extends PageObject {
 
-    @FindBy(xpath =
-            "//button[@data-formname='forms/enum/payfreq']")
+    @FindBy(css = "#payroll-information-tab")
+    WebElementFacade payrollInformationTab;
+
+    @FindBy(xpath = "//div[@meta-widget-name='payFrequency']//button[@data-formname='forms/enum/payfreq']")
     WebElementFacade payFrequencyDropDownButton;
 
     @FindAll(@FindBy(xpath =
@@ -20,28 +22,30 @@ public class EditCompanyDetails extends PageObject {
     List<WebElement> payFrequencyDropDownList;
 
     @FindBy(xpath =
-            "//div[@class='btn btn-success btn-sm'][1]")
+            "//div[@class='d-flex mb-2 mt-2']//div[@class='btn btn-success btn-sm save-btn']")
     WebElementFacade saveButton;
 
     BasicInteractions basicInteractions;
 
     public void clickPayFrequencyDropDownButton() {
-        basicInteractions.ifElementDisplayed(payFrequencyDropDownButton, basicInteractions);
-    }
-
-    public void clickSaveButton() {
-        basicInteractions.ifElementDisplayed(saveButton, basicInteractions);
+        basicInteractions.ifElementEnabled(payFrequencyDropDownButton, basicInteractions);
     }
 
     public void selectPayFrequency(String payFrequency) {
-        for(int i=0; i < payFrequencyDropDownList.size(); i++) {
-            if (payFrequencyDropDownList.get(i).getText().equals(payFrequency)) {
-                payFrequencyDropDownList.get(i).click();
-                break;
-            } else {
-                continue;
-            }
-        }
+        basicInteractions.clickIfElementEqualsToParameter(payFrequency
+                                    , payFrequencyDropDownList);
     }
 
+    public void clickSaveButton() {
+        basicInteractions.waitingTimeOUT(1000);
+        saveButton.shouldBeCurrentlyVisible();
+        basicInteractions.ifElementEnabled(saveButton, basicInteractions);
+        basicInteractions.waitingTimeOUT(2000);
+    }
+
+    public void clickPayrollInformationTab() {
+        basicInteractions.waitingTimeOUT(1000);
+        payrollInformationTab.shouldBeCurrentlyVisible();
+        basicInteractions.clickIfGivenElementDisplayed(payrollInformationTab);
+    }
 }

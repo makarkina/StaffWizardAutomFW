@@ -9,7 +9,7 @@ import com.vRoll.autom.pages.PayrollPage;
 
 public class CheckCalculationForOneEmployeeSteps {
 
-    PayrollPage payrollPage;
+    //PayrollPage payrollPage;
     PayrollChecksPage payrollChecksPage;
     AddPayrollCheckForm addPayrollCheckForm;
     SelectEmployee selectEmployee;

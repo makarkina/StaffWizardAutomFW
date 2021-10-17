@@ -4,6 +4,7 @@ import com.vRoll.autom.forms.AddPayrollForm;
 import com.vRoll.autom.forms.EditCompanyDetails;
 import com.vRoll.autom.pages.MainPage;
 import com.vRoll.autom.pages.PayrollPage;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Step;
@@ -14,8 +15,8 @@ public class PayrollCreationForAllEmployeesSetPeriodSteps {
 
     MainPage mainPage;
     EditCompanyDetails editCompanyDetails;
-    PayrollPage payrollPage;
-    AddPayrollForm addPayrollForm;
+//    PayrollPage payrollPage;
+//    AddPayrollForm addPayrollForm;
 
 
     @Step
@@ -39,4 +40,10 @@ public class PayrollCreationForAllEmployeesSetPeriodSteps {
     public void userSavePayFrequency() throws Exception {
         editCompanyDetails.clickSaveButton();
     }
+
+    @And("^user opens Payroll Information Tab$")
+    public void userOpensPayrollInformationTab() {
+        editCompanyDetails.clickPayrollInformationTab();
+    }
+
 }

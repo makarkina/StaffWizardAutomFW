@@ -27,22 +27,14 @@ public class PayrollChecksPage extends PageObject {
     List<WebElement> editButtonList;
 
     @FindBy(xpath =
-            "//span[@class='total-pages']")
+            "//div[@id='pagination-PayrollCheck']//span[@class='total-pages']")
     WebElementFacade pagesNumber;
 
     @FindBy(xpath =
             "//div[@class='btn btn-default btn-sm fragment-pagination-next mr-2']")
     WebElementFacade nextButton;
 
-    @FindBy(xpath =
-            "//section[@id='main-container']//div[@data-fragment='forms/payrollcheck/list']//tbody[@class='list-items']/tr[1]/td[6]//div[@class='btn-group'][1]")
-    WebElementFacade lastArrowButton;
-
-    /*@FindBy(xpath =
-            "//section[@id='main-container']//div[@data-depends-on='payroll']//div[@class='d-flex pt-2 pb-2']//div[@class='btn btn-success btn-sm']")
-    WebElementFacade addCheckButton;*/
-
-    @FindBy(xpath =
+   @FindBy(xpath =
             "//div[@class='d-flex pt-2 pb-2']//div[@class='d-flex flex-column justify-content-around pl-2']//i[@class='fa fa-plus']")
     WebElementFacade addCheckButton;
 
@@ -67,11 +59,9 @@ public class PayrollChecksPage extends PageObject {
     List<WebElement> dateForCheckList;
 
     @FindBy(xpath =
-            "//div[@class='dropdown-menu dropdown-menu-right show']//div[@class='dropdown-item'][2]")
+            "//div[@class='dropdown-menu dropdown-menu-right show']//div[contains(.,'Calculate Check')]")
     WebElementFacade calculateCheck;
 
-    /*@FindBy(xpath =
-            "//div[@class='dropdown-menu dropdown-menu-right show']//a[@data-title='Payroll Check Details']")*/
     @FindBy(css = ".dropdown-menu-right.show > a:nth-child(1)")
     WebElementFacade payrollCheckDetails;
 
@@ -84,11 +74,74 @@ public class PayrollChecksPage extends PageObject {
     public int employeeNumber = 0;
 
     public void addNewCheckForEmployee() {
-        basicInteractions.ifElementDisplayed(addCheckButton, basicInteractions);
+        basicInteractions.waitingTimeOUT(1000);
+        basicInteractions.ifElementEnabled(addCheckButton, basicInteractions);
      }
 
+    public void selectGearButtonForGivenEmployee(String givenEmployee) {
+        basicInteractions.waitingTimeOUT(3000);
+        basicInteractions.clickDifElementIfElemWithParamDisplayed(givenEmployee, employeesList
+                                    , basicInteractions, gearButtonList);
+    }
+
+    public void clickEditButtonForGivenEmployee(String givenEmployee) {
+        basicInteractions.waitingTimeOUT(2000);
+        basicInteractions.clickDifElementIfElemWithParamDisplayed(givenEmployee, employeesList
+                                    , basicInteractions, editButtonList);
+    }
+
+    public void calculateCheckForEmployee() throws InterruptedException {
+        basicInteractions.ifElementEnabled(calculateCheck, basicInteractions);
+        basicInteractions.waitingTimeOUT(3000);
+    }
+
+     public void verifyDateForAllChecks() {
+         basicInteractions.waitingTimeOUT(3000);
+         if (dateForCheckList.get(dateForCheckList.size() - 1).isDisplayed()) {
+             for (int i = 0; i < dateForCheckList.size(); i++) {
+                 Assert.assertEquals(dateForCheckList.get(i).getText().substring(0, 10)
+                         , PayrollPage.lastPayCheckDate);
+             }
+         } else {
+             System.out.println("Check Date is not displayed ");
+         }
+     }
+
+     public void verifyInfoForSingleCheck(String givenEmployee
+             , String grossWages, String netWages) {
+         basicInteractions.assertIfElementDisplayed(grossWages, employeeGrossWagesList, chosenGrossWages);
+         basicInteractions.assertIfElementDisplayed(netWages, employeeGrossWagesList, chosenNetWages);
+    }
+
+    /*public void verifyNumberOfChecks(String allEmployees) {
+        basicInteractions.getNumberOfAllElements(allEmployees, employeesList);
+    }*/
+
+    public void verifyNumberOfChecks(String allEmployees) {
+        basicInteractions.waitingTimeOUT(500);
+        employeesList.get(editButtonList.size()-1).isDisplayed();
+        String numberOfPages = pagesNumber.getText();
+        int pages = Integer.parseInt(numberOfPages);
+        int count = employeesList.size();
+        for (int i = 0; i < pages; i++) {
+            if (nextButton.isCurrentlyVisible()) {
+                nextButton.click();
+                count = count + employeesList.size();
+            } else {
+                System.out.println("NextButton is not clickable");
+            }
+        }
+        basicInteractions.assertNumberOfElements(count, allEmployees, employeesList);
+        System.out.println("Number of checks: " + count);
+    }
+
+    public void openPayrollCheckDetailsForGivenEmployee(String givenEmployee){
+        basicInteractions.clickElemIfDifElemContainsParam(givenEmployee, employeesList, arrowButtonList);
+        basicInteractions.clickIfGivenElementDisplayed(payrollCheckDetails);
+    }
+
     public void selectGivenEmployee(String givenEmployee) throws InterruptedException {
-         if (employeesList.get(employeesList.size()-1).isDisplayed()){
+        if (employeesList.get(employeesList.size()-1).isDisplayed()){
             for (int i = 0; i < employeesList.size(); i++) {
                 if (employeesList.get(i).getText().contains(givenEmployee)) {
                     employeesList.get(i).click();
@@ -108,95 +161,8 @@ public class PayrollChecksPage extends PageObject {
         }
     }
 
-    public void selectGearButtonForGivenEmployee(String givenEmployee) {
-        if (employeesList.get(employeesList.size()-1).isDisplayed()) {
-            for (int i = 0; i < employeesList.size(); i++) {
-                if (employeesList.get(i).getText().contains(givenEmployee)) {
-                    employeeNumber = i;
-                    employeesList.get(i).click();
-                    gearButtonList.get(i).click();
-                    break;
-                } else {
-                    continue;
-                }
-            }
-        } else {
-            System.out.println("Employee is not displayed");
-        }
+    public void verifyDateOnSelectedCheck(String givenCheckDate) {
+        Assert.assertEquals(dateForCheckList.get(0).getText().substring(0, 10)
+                , givenCheckDate);
     }
-
-    public void clickEditButtonForGivenEmployee(String givenEmployee) {
-        if (employeesList.get(employeesList.size()-1).isDisplayed()) {
-            for (int i = 0; i < employeesList.size(); i++) {
-                if (employeesList.get(i).getText().contains(givenEmployee)) {
-                    employeesList.get(i).click();
-                    System.out.println("givenEmployee " + givenEmployee);
-                    System.out.println(employeeGrossWagesList.get(i).getText());
-                    editButtonList.get(i).click();
-                    break;
-                } else {
-                    continue;
-                }
-            }
-        } else {
-            System.out.println("Employee is not displayed");
-        }
-    }
-
-    public void selectArrowButtonForGivenEmployee(String givenEmployee) {
-        if (employeesList.get(employeesList.size()-1).isDisplayed()) {
-            for (int i = 0; i < employeesList.size(); i++) {
-                if (employeesList.get(i).getText().contains(givenEmployee)) {
-                    employeesList.get(i).click();
-                    System.out.println(employeesList.get(i).getText());
-                    arrowButtonList.get(i).click();
-
-                    break;
-                } else {
-                    continue;
-                }
-            }
-        } else {
-            System.out.println("Employee is not displayed");
-        }
-    }
-
-    public void calculateCheckForEmployee() throws InterruptedException {
-        basicInteractions.ifElementDisplayed(calculateCheck, basicInteractions);
-        basicInteractions.waitingTimeOUT(5000);
-    }
-
-     public void verifyDateForAllChecks() {
-         if (dateForCheckList.get(dateForCheckList.size() - 1).isDisplayed()) {
-             basicInteractions.waitingTimeOUT(3000);
-             for (int i = 0; i < dateForCheckList.size(); i++) {
-                 Assert.assertEquals(dateForCheckList.get(i).getText().substring(0, 10)
-                         , PayrollPage.lastPayCheckDate);
-                 System.out.println(dateForCheckList.get(i).getText().substring(0, 10));
-             }
-         } else {
-             System.out.println("Check Date is not displayed ");
-         }
-     }
-
-     public void verifyInfoForSingleCheck(String givenEmployee
-             , String grossWages, String netWages) {
-         if (employeeGrossWagesList.get(employeeGrossWagesList.size()-1).isDisplayed()) {
-             Assert.assertEquals(chosenGrossWages, grossWages);
-             Assert.assertEquals(chosenNetWages, netWages);
-         } else {
-             System.out.println("EmployeeGrossWages is not displayed");
-         }
-
-    }
-
-     public void verifyNumberOfChecks(String allEmployees) {
-         if (employeesList.get(employeesList.size()-1).isDisplayed()) {
-             Assert.assertEquals(employeesList.size(), Integer.parseInt(allEmployees));
-             System.out.println("Number of checks " + employeesList.size());
-         } else {
-             System.out.println("Employee is not displayed");
-         }
-      }
-
 }

@@ -6,6 +6,7 @@ import com.vRoll.autom.forms.EditPayrollCheckDetails;
 import com.vRoll.autom.pages.PayrollCheckDetailsPage;
 import com.vRoll.autom.pages.PayrollChecksPage;
 import com.vRoll.autom.pages.PayrollPage;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import net.thucydides.core.annotations.Step;
@@ -15,9 +16,21 @@ public class CreatedPayrollCheckDetailsVerificationSteps {
     PayrollPage payrollPage;
     PayrollChecksPage payrollChecksPage;
     PayrollCheckDetailsPage payrollCheckDetailsPage;
-    AddPayrollCheckDetails addPayrollCheckDetails;
     EditPayrollCheckDetails editPayrollCheckDetails;
     EditPayrollCheck editPayrollCheck;
+
+    @Step
+    @When("^user selects payroll with (.*)$")
+    public void userSelectPayrollWithGivenCheckDate(String givenCheckDate) {
+        payrollPage.selectPayrollWithGivenDate(givenCheckDate);
+    }
+
+    @Step
+    @Then("^user verifies (.*) on selected check$")
+    public void userVerifiesDateOnSelectedCheck(String givenCheckDate) {
+        payrollChecksPage.verifyDateOnSelectedCheck(givenCheckDate);
+    }
+
 
     @Step
     @Then("^user opens Edit Check for chosen employee (.*)$")
@@ -26,13 +39,13 @@ public class CreatedPayrollCheckDetailsVerificationSteps {
     }
 
     @Step
-    @Then("^user opens Payroll Check Details$")
+    @Then("^user clicks Payroll Check Details Tab$")
     public void userOpensPayrollCheckDetails() {
         editPayrollCheck.clickCheckDetailsTab();
     }
 
     @Step
-    @Then("^user opens Payroll Check Details for given ED (.*)$")
+    @Then("^user opens Edit Payroll Check for given ED (.*)$")
     public void userOpensPayrollCheckDetailsForChosenEmployee(String givenED) {
         editPayrollCheck.selectED(givenED);
         editPayrollCheck.clickEditButton();
@@ -57,12 +70,17 @@ public class CreatedPayrollCheckDetailsVerificationSteps {
     }
 
     @Step
-    @Then("^user verifies earning for (.*), (.*), (.*), (.*), (.*), (.*), (.*)$")
-    public void userVerifiesHourlyEarning(String checkDate, String employeeID, String earning,
-                                          String state, String hours, String payRate, String amount) {
-        editPayrollCheckDetails.verifyHourlyEarning(checkDate, employeeID, earning, state,
-                                            hours, payRate, amount);
+    @Then("^user clicks Save button on Edit Payroll Check screen$")
+    public void userClicksSaveOnEditPayrollCheck() {
+        editPayrollCheck.clickSaveButton();
     }
 
 
+    @Step
+    @Then("^user verifies earning for (.*), (.*), (.*), (.*), (.*), (.*)$")
+    public void userVerifiesHourlyEarning(String employeeName, String earning,
+                                          String state, String hours, String payRate, String amount) {
+        editPayrollCheckDetails.verifyEarning(employeeName, earning, state,
+                                            hours, payRate, amount);
+    }
 }

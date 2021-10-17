@@ -24,23 +24,23 @@ public class MainPage extends PageObject{
 
         BasicInteractions basicInteractions;
 
-        public void selectCompaniesMode(){
-                basicInteractions.ifElementDisplayed(companiesMode, basicInteractions);
-        }
+    public void selectCompaniesMode(){
+        basicInteractions.ifElementEnabled(companiesMode, basicInteractions);
+    }
 
-        public void openEditCompanyDetails(){
-                basicInteractions.ifElementDisplayed(editCompanyDetails, basicInteractions);
-        }
+    public void openEditCompanyDetails(){
+        basicInteractions.ifElementEnabled(editCompanyDetails, basicInteractions);
+    }
 
-        public void selectEmployeeMode(){
-                basicInteractions.ifElementDisplayed(employeesMode, basicInteractions);
-        }
+    public void selectEmployeeMode(){
+        basicInteractions.ifElementEnabled(employeesMode, basicInteractions);
+    }
 
-        public void selectPayrollsMode(){
-                basicInteractions.ifElementDisplayed(payrollsMode, basicInteractions);
-        }
+    public void selectPayrollsMode(){
+        basicInteractions.ifElementEnabled(payrollsMode, basicInteractions);
+    }
 
-        public void selectCompaniesOption() {
-                companiesOption.click();
-        }
+    public void selectCompaniesOption() {
+        companiesOption.click();
+    }
 }

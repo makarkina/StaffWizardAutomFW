@@ -20,7 +20,7 @@ public class CreatePayrollCheckPage extends PageObject {
     BasicInteractions basicInteractions;
 
     public void clickCreateCheckWithED() {
-        basicInteractions.ifElementDisplayed(createCheckWithED, basicInteractions);
+        basicInteractions.ifElementEnabled(createCheckWithED, basicInteractions);
         basicInteractions.waitingTimeOUT(3000);
     }
 }

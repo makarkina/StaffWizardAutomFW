@@ -6,9 +6,14 @@ Feature:
     And user login using anna and 234
     And user selects Payrolls mode on Main page
 
-  Scenario: Positive test
+  Scenario Outline: Positive test
 
-    And user verifies a number of payrolls
+    And user selects payroll with <Given Check date>
+
+    Examples:
+      |Given Check date|
+      |07/18/2033      |
+
 
 
 

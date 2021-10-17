@@ -8,18 +8,18 @@ import net.thucydides.core.annotations.Step;
 
 public class PayrollCreationForOneEmployee2Steps {
 
-    PayrollPage payrollPage;
-    AddPayrollForm addPayrollForm;
+    //PayrollPage payrollPage;
+    //AddPayrollForm addPayrollForm;
 
 
-    @Step
-    @When("^user creates new payroll for given dates$")
-    public void userEntersPayrollDates() throws Exception {
+    /*@Step
+    @When("^user creates new payroll for given dates depending on (.*) $")
+    public void userEntersPayrollDates(String payFrequency) throws Exception {
         payrollPage.getBeginDateForNewPayroll();
-        payrollPage.getEndDateForNewPayroll();
+        //payrollPage.getEndDateForNewPayroll(payFrequency);
         payrollPage.addNewPayroll();
         addPayrollForm.enterDatesToNewPayrollForm();
-    }
+    }*/
 
 
 }

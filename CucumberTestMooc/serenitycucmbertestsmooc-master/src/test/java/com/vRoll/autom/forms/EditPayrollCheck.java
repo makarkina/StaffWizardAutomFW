@@ -8,27 +8,31 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 public class EditPayrollCheck extends PageObject {
 
     @FindBy(css =
+            "//div[@class='form-group state-success']//input[@class='form-control']")
+    WebElementFacade employeeBox;
+
+    @FindBy(xpath =
+            "//div[@class='d-flex mb-2 mt-2']//div[@class='btn btn-success btn-sm save-btn']")
+    WebElementFacade saveButton;
+
+    @FindBy(css =
             "input[name='federalTax']")
-    WebElementFacade federalTax;
+    WebElementFacade federalTaxBox;
 
     @FindBy(css =
             "input[name='eeOasdiTax']")
-    WebElementFacade eeOASDITax;
+    WebElementFacade eeOASDITaxBox;
 
     @FindBy(css =
             "input[name='eeMedicareTax']")
-    WebElementFacade eeMedicareTax;
+    WebElementFacade eeMedicareTaxBox;
 
     @FindBy(css =
             "input[name='fuiTax']")
-    WebElementFacade fuiTax;
+    WebElementFacade fuiTaxBox;
 
     @FindBy(css = "#check-details-tab")
     WebElementFacade checkDetailsTab;
@@ -37,7 +41,7 @@ public class EditPayrollCheck extends PageObject {
     WebElementFacade checkStatesTab;
 
     @FindAll(@FindBy(xpath =
-            "//div/div/div[4]/div[2]/div/div[2]/table/tbody/tr/td[1]"))
+            "//div[@data-fragment='PayrollCheckDetail']//tbody[@class='list-items']//tr//td[1]"))
     List<WebElement> EDList;
 
     @FindBy(xpath =
@@ -55,64 +59,45 @@ public class EditPayrollCheck extends PageObject {
     BasicInteractions basicInteractions;
 
     public void clickCheckDetailsTab() {
-        basicInteractions.ifElementDisplayed(checkDetailsTab, basicInteractions);
+        basicInteractions.waitingTimeOUT(2000);
+        basicInteractions.ifElementEnabled(checkDetailsTab, basicInteractions);
     }
 
     public void clickEditButton() {
-        basicInteractions.ifElementDisplayed(editButton, basicInteractions);
+        basicInteractions.ifElementEnabled(editButton, basicInteractions);
     }
 
     public void clickEditStateButton() {
-        basicInteractions.ifElementDisplayed(editStateButton, basicInteractions);
+        basicInteractions.ifElementEnabled(editStateButton, basicInteractions);
     }
 
     public void opensNewCheckDetails() {
-        basicInteractions.ifElementDisplayed(addButton, basicInteractions);
+        //basicInteractions.waitingTimeOUT(500);
+        basicInteractions.ifElementEnabled(addButton, basicInteractions);
     }
 
     public void clickCheckStatesTab() {
         basicInteractions.waitingTimeOUT(1500);
-        basicInteractions.ifElementDisplayed(checkStatesTab, basicInteractions);
+        basicInteractions.ifElementEnabled(checkStatesTab, basicInteractions);
     }
 
     public void selectED(String givenED) {
-        for(int i=0; i<EDList.size(); i++) {
-                if(EDList.get(i).getText().contains(givenED)){
-                    EDList.get(i).click();
-                    System.out.println("ED " + EDList.get(i).getText());
-                    break;
-                } else {
-                    continue;
-                }
-        }
+        basicInteractions.clickIfElementWithGivenParamDisplayed(givenED
+                , EDList, basicInteractions);
     }
 
-    public void verifyFedTaxes(String fedTax, String eeOASDI
+    public void verifyFedTaxes(String federal, String eeOASDI
                         , String eeMedicare, String fui) {
-        federalTax.shouldBeCurrentlyVisible();
-        if (federalTax.isCurrentlyVisible()){
-            assertThat(federalTax.getAttribute("value"), equalTo(fedTax));
-            System.out.println("federalTax " + federalTax.getAttribute("value"));
-        } else {
-            System.out.println("fedTax is not verified");
-        }
-        if (eeOASDITax.isCurrentlyVisible()){
-            assertThat(eeOASDITax.getAttribute("value"), equalTo(eeOASDI));
-            System.out.println("eeOASDITax " + eeOASDITax.getAttribute("value"));
-        } else {
-            System.out.println("eeOASDITax is not verified");
-        }
-        if (eeMedicareTax.isCurrentlyVisible()){
-            assertThat(eeMedicareTax.getAttribute("value"), equalTo(eeMedicare));
-            System.out.println("eeMedicareTax " + eeMedicareTax.getAttribute("value"));
-        } else {
-            System.out.println("eeMedicareTax is not verified");
-        }
-        if (fuiTax.isCurrentlyVisible()){
-            assertThat(fuiTax.getAttribute("value"), equalTo(fui));
-            System.out.println("fuiTax " + fuiTax.getAttribute("value"));
-        } else {
-            System.out.println("fuiTax is not verified");
-        }
+        basicInteractions.waitingTimeOUT(1000);
+        basicInteractions.assertContainsIfElementEnabled(federal, federalTaxBox, basicInteractions);
+        basicInteractions.assertContainsIfElementEnabled(eeOASDI, eeOASDITaxBox, basicInteractions);
+        basicInteractions.assertContainsIfElementEnabled(eeMedicare, eeMedicareTaxBox, basicInteractions);
+        basicInteractions.assertContainsIfElementEnabled(fui, fuiTaxBox, basicInteractions);
+    }
+
+    public void clickSaveButton() {
+        basicInteractions.waitingTimeOUT(500);
+        basicInteractions.ifElementEnabled(saveButton, basicInteractions);
+        basicInteractions.waitingTimeOUT(2000);
     }
 }

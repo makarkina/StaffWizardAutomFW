@@ -13,7 +13,6 @@ public class BasicStepDefinitions {
     LoginPage loginPage;
     MainPage mainPage;
     CompanyPage companyPage;
-    CompanyScreen companyScreen;
 
     @Step
     @Given("^user opens the application$")

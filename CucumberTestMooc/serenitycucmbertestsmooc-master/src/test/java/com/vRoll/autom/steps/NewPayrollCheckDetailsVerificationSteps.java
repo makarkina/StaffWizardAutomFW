@@ -11,9 +11,9 @@ import net.thucydides.core.annotations.Step;
 
 public class NewPayrollCheckDetailsVerificationSteps {
 
-    PayrollPage payrollPage;
-    PayrollChecksPage payrollChecksPage;
-    PayrollCheckDetailsPage payrollCheckDetailsPage;
+    //PayrollPage payrollPage;
+    //PayrollChecksPage payrollChecksPage;
+    //PayrollCheckDetailsPage payrollCheckDetailsPage;
     AddPayrollCheckDetails addPayrollCheckDetails;
     EditPayrollCheck editPayrollCheck;
     EditPayrollCheckDetails editPayrollCheckDetails;

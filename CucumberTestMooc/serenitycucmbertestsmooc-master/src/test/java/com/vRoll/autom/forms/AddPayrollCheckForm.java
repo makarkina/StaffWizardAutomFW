@@ -13,7 +13,7 @@ public class AddPayrollCheckForm extends PageObject {
     WebElementFacade employeeBox;
 
     @FindBy(xpath =
-            "//div[@data-fragment='PayrollCheck']//div[@class='d-flex mb-2 mt-2']//div[@class='btn btn-success btn-sm']")
+            "//div[@class='d-flex mb-2 mt-2']//div[@class='btn btn-success btn-sm save-btn']")
     WebElementFacade saveCheckButton;
 
     @FindBy(xpath ="//div[@class='card-header bg-lightblue  text-white']")
@@ -22,22 +22,14 @@ public class AddPayrollCheckForm extends PageObject {
     @FindBy(xpath ="//button[@data-formname='forms/employee/select']")
     WebElementFacade employeeSelectButton;
 
-    @FindBy(xpath =
-            "//div[@class='card-body ']//div[@meta-widget-name='backupWithholdingOverride']")
-    WebElementFacade backWithOverrideBox;
-
-    @FindBy(xpath =
-            "//div[@class='card-body d-flex flex-column']//div[@meta-widget-name='notes']")
-    WebElementFacade notesBox;
-
     BasicInteractions basicInteractions;
 
     public void openEmployeeSelect(){
-        basicInteractions.ifElementDisplayed(employeeSelectButton, basicInteractions);
+        basicInteractions.ifElementEnabled(employeeSelectButton, basicInteractions);
     }
 
     public void saveNewCheck(){
-        basicInteractions.ifElementDisplayed(saveCheckButton, basicInteractions);
+        basicInteractions.ifElementEnabled(saveCheckButton, basicInteractions);
         basicInteractions.waitingTimeOUT(2000);
     }
 }

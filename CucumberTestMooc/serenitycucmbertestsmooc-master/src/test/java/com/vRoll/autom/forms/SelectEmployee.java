@@ -1,5 +1,6 @@
 package com.vRoll.autom.forms;
 
+import com.vRoll.autom.actions.webElemInteractions.BasicInteractions;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.openqa.selenium.WebElement;
@@ -18,15 +19,12 @@ public class SelectEmployee extends PageObject {
             "//div[@data-fragment='employee_list']//tbody[@class='list-items']//tr[10]/td[3]")
     WebElementFacade firstEmployee;
 
-    public void selectEmployee(String chosenEmployee){
-        firstEmployee.shouldBeVisible();
-        for(int i=0; i<employeesList.size(); i++) {
-            if(employeesList.get(i).getText().contains(chosenEmployee)){
-                employeesList.get(i).click();
-                break;
-            } else {
-                continue;
-            }
-        }
+    BasicInteractions basicInteractions;
+
+
+
+    public void selectEmployee(String chosenEmployee) {
+        basicInteractions.clickIfElementWithGivenParamDisplayed(chosenEmployee, employeesList, basicInteractions);
     }
 }
+

@@ -1,5 +1,6 @@
 package com.vRoll.autom.steps;
 
+import com.vRoll.autom.forms.AddPayrollForm;
 import com.vRoll.autom.pages.PayrollChecksPage;
 import com.vRoll.autom.pages.PayrollPage;
 import cucumber.api.java.en.And;
@@ -10,9 +11,10 @@ public class CheckCalculationForAllEmployeesSteps {
 
     PayrollPage payrollPage;
     PayrollChecksPage payrollChecksPage;
+    //AddPayrollForm addPayrollForm;
 
     @Step
-    @Then("^user gets last check date")
+    @Then("^user gets last payroll date")
     public void userGetsLastCheckDate() throws Exception {
         payrollPage.selectLastPayrollDates();
     }
@@ -21,13 +23,21 @@ public class CheckCalculationForAllEmployeesSteps {
     @Then("^user opens a Payroll Checks screen")
     public void userOpensPayrollCheck() throws Exception {
         payrollPage.openDropDownMenuArrow();
-        payrollPage.selectPayrollChecks();
+        payrollPage.selectPayrollChecksOption();
     }
+
 
     @And("^user calculates all checks$")
     public void userCalculatesAllChecks() throws Exception {
         payrollPage.openDropDownMenuGearForLastPayroll();
         payrollPage.selectCalculateAllChecksOption();
+    }
+
+
+    @Step
+    @Then("^user verifies number of calculated checks$")
+    public void userVerifiesNumberOfChecks() {
+        //payrollCheckDetailsPage.openEditCheckDetails();
     }
 
     @Step
@@ -38,6 +48,8 @@ public class CheckCalculationForAllEmployeesSteps {
 
     @Then("^user verifies date for each of calculated checks$")
     public void userVerifiesGivenCheckDate() throws Exception {
+        payrollPage.openDropDownMenuArrowForLastPayroll();
+        payrollPage.selectPayrollChecksOption();
         payrollChecksPage.verifyDateForAllChecks();
     }
 

@@ -12,20 +12,44 @@ import java.util.List;
 public class AddPayrollCheckDetails extends PageObject {
 
     @FindBy(xpath=
-            "//div[@class='row'][2]//div[@meta-widget-name='companyEdm']//button")
+            "//div[@meta-widget-name='companyEdm']//button")
     WebElementFacade earnDeductDropDownButton;
 
     @FindAll(@FindBy(xpath =
-            "//div[@class='row'][2]//div[@data-fragment='companyedm_list']//tbody[@class='list-items']//tr"))
+            "//div[@data-fragment='companyedm_list']//tbody[@class='list-items']//tr"))
     List<WebElement> edFromDropDownList;
 
     @FindBy(xpath=
-            "//div[@class='row'][2]//div[@meta-widget-name='employeeState']//button")
+            "//div[@meta-widget-name='employeeState']//button")
     WebElementFacade stateDropDownButton;
 
     @FindAll(@FindBy(xpath =
             "//div[@data-fragment='employeestate_dropdown']//tbody[@class='list-items']//tr[@class='highlight']//td"))
     List<WebElement> stateFromDropDownList;
+
+    @FindBy(xpath=
+            "//div[@meta-widget-name='companyTier1']//button")
+    WebElementFacade tier1DropDownButton;
+
+    @FindAll(@FindBy(xpath =
+            "//div[@data-fragment='companytier1_dropdown']//tbody[@class='list-items']//tr"))
+    List<WebElement> tier1DropDownList;
+
+    @FindBy(xpath=
+            "//div[@meta-widget-name='companyTier2']//button")
+    WebElementFacade tier2DropDownButton;
+
+    @FindAll(@FindBy(xpath =
+            "//div[@data-fragment='companytier2_dropdown']//tbody[@class='list-items']//tr"))
+    List<WebElement> tier2DropDownList;
+
+    @FindBy(xpath=
+            "//div[@meta-widget-name='companyTier3']//button")
+    WebElementFacade tier3DropDownButton;
+
+    @FindAll(@FindBy(xpath =
+            "//div[@data-fragment='companytier3_dropdown']//tbody[@class='list-items']//tr"))
+    List<WebElement> tier3DropDownList;
 
     @FindBy(xpath=
             "//div[@meta-widget-name='companyEdm']//input[@type='text']")
@@ -34,6 +58,14 @@ public class AddPayrollCheckDetails extends PageObject {
     @FindBy(xpath=
             "//div[@meta-widget-name='employeeState']//input[@type='text']")
     WebElementFacade stateBox;
+
+    @FindBy(xpath=
+            "//div[@meta-widget-name='employeeState']//input[@type='text']")
+    WebElementFacade tier1Box;
+
+    @FindBy(xpath=
+            "//div[@meta-widget-name='employeeState']//input[@type='text']")
+    WebElementFacade tier2Box;
 
     @FindBy(xpath =
             "//div[@class='row'][5]//div[@class='col-3'][1]//input[@name='hours']")
@@ -48,21 +80,21 @@ public class AddPayrollCheckDetails extends PageObject {
     WebElementFacade amountBox;
 
     @FindBy(xpath =
-            "//div[@data-fragment='PayrollCheckDetail']//div[@class='btn btn-success btn-sm']")
+            "//div[@data-fragment='PayrollCheckDetail']//div[@class='btn btn-success btn-sm save-btn']")
     WebElementFacade saveButton;
 
     BasicInteractions basicInteractions;
 
     public void openEdDropDownMenu() {
-        basicInteractions.ifElementDisplayed(earnDeductDropDownButton, basicInteractions);
+        basicInteractions.ifElementEnabled(earnDeductDropDownButton, basicInteractions);
     }
 
     public void openStateDropDownMenu() {
-        basicInteractions.ifElementDisplayed(stateDropDownButton, basicInteractions);
+        basicInteractions.ifElementEnabled(stateDropDownButton, basicInteractions);
     }
 
-    public void clickSaveButton() {
-        basicInteractions.ifElementDisplayed(saveButton, basicInteractions);
+    public void clickSaveButton() { basicInteractions.waitingTimeOUT(3000);
+        basicInteractions.ifElementEnabled(saveButton, basicInteractions);
     }
 
     public void selectEDtype(String edType) {
@@ -85,6 +117,26 @@ public class AddPayrollCheckDetails extends PageObject {
     }
 
     public void enterAmount(String amount) {
-        basicInteractions.sendKeyIfElementEnabled(amount, amountBox, "amountBox is not available");
+        basicInteractions.sendKeyIfElementEnabled(amount, amountBox);
     }
+
+    /*public void openTier1tDropDownMenu() {
+        basicInteractions.ifElementEnabled(tier1DropDownButton, basicInteractions);
+    }
+
+    public void selectTier1(String tier1) {
+        basicInteractions.clickDropDownItemIfBoxEnabled(tier1, hoursBox
+                , basicInteractions, tier1DropDownList);
+    }
+
+    public void openTier2tDropDownMenu() {
+        basicInteractions.ifElementEnabled(tier1DropDownButton, basicInteractions);
+    }
+
+    public void selectTier2(String tier2) {
+        basicInteractions.clickDropDownItemIfBoxEnabled(tier2, hoursBox
+                , basicInteractions, tier2DropDownList);
+    }*/
+
+
 }

@@ -1,6 +1,5 @@
 package com.vRoll.autom.pages;
 
-
 import com.ibm.icu.text.DateFormat;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.vRoll.autom.actions.webElemInteractions.BasicInteractions;
@@ -47,7 +46,7 @@ public class PayrollPage extends PageObject {
     WebElementFacade nextButton;
 
     @FindAll(@FindBy(xpath =
-            "//div[@class='card-body p-0 d-flex']//tr//td//div[@type='button']//i[@class='fa fa-reply fa-flip-horizontal']"))
+            "//div[@type='button']//i[@class='fa fa-reply fa-flip-horizontal']"))
     List<WebElement> dropDownMenuArrowList;
 
     @FindAll(@FindBy(xpath =
@@ -66,10 +65,6 @@ public class PayrollPage extends PageObject {
             = "//section[@id='main-container']//div[@data-fragment='forms/payroll/list']//tr[10]/td[1]/a")
     WebElementFacade firstPayrollCheckDate;
 
-    @FindBy(xpath
-            = "//section[@id='main-container']//div[@data-fragment='forms/payroll/list']//tr[2]/td[1]/a")
-    WebElementFacade previousPayrollCheckDate;
-
     @FindAll(@FindBy(xpath =
             "//section[@id='main-container']//div[@data-fragment='forms/payroll/list']//tr/td[1]/a"))
     List<WebElement> payrollDateList;
@@ -84,18 +79,7 @@ public class PayrollPage extends PageObject {
 
     @FindAll(@FindBy(xpath =
             "//section[@id='main-container']//div[@data-fragment='forms/payroll/list']//tr/td[5]"))
-    List<WebElement> payrollPayFrequencyList;
-
-    @FindBy(xpath =
-            "//section[@id='main-container']//div[@data-fragment='forms/payroll/list']//tr[1]//th[1]")
-    WebElementFacade checkDateSign;
-
-    @FindBy(xpath = "//div[@data-sortkey='checkdate']")
-    WebElementFacade sortChecksSign;
-
-    @FindBy(xpath =
-            "//div[@class='dropdown-menu dropdown-menu-right show']//div[@class='dropdown-item ']")
-    WebElementFacade createNextPayroll;
+    List<WebElement> payFrequencyList;
 
     @FindBy(xpath =
             "//div[@class='dropdown-menu dropdown-menu-right show']//a[contains(.,'Create Payroll Checks')]")
@@ -118,37 +102,67 @@ public class PayrollPage extends PageObject {
     public static String newPeriodEndDate;
     public static String estNewPeriodBeginDate;
     public static String estNewPeriodEndDate;
-    public static String trNewPeriodBeginDate;
-    public String chosenCheckDate;
+    public static String numberOfPages;
     public String payFrequency;
-    public int checkNumber = 0;
+    public static int checkNumber = 0;
 
 
     public void refreshPage() {
         basicInteractions.waitingTimeOUT(3000);
-        basicInteractions.ifElementDisplayed(refreshPageButton, basicInteractions);
-    }
-
-
-    public void addNewPayroll() {
-        basicInteractions.ifElementDisplayed(startNewPayrollButton, basicInteractions);
-        basicInteractions.waitingTimeOUT(3000);
+        basicInteractions.clickIfButtonEnabled(refreshPageButton);
     }
 
     public void createNextPayroll() {
-        basicInteractions.waitingTimeOUT(3000);
-        basicInteractions.ifElementDisplayed(createNextPayrollButton, basicInteractions);
+        basicInteractions.waitingTimeOUT(1000);
+        basicInteractions.clickIfElementEnabled(createNextPayrollButton);
     }
 
     public void selectLastPayrollDates() {
-        basicInteractions.waitingTimeOUT(1500);
+        basicInteractions.waitingTimeOUT(500);
         lastPayrollCheckDate.shouldBeVisible();
         lastPayCheckDate = payrollDateList.get(0).getText();
         lastPeriodEndDate = payrollEndDateList.get(0).getText();
-        System.out.println("lastPayCheckDate " + lastPayCheckDate);
     }
 
-    public int getCheckNumber(String givenCheckDate) {
+    public void openDropDownMenuGearForLastPayroll() {
+        lastPayrollCheckDate.shouldBeVisible();
+        basicInteractions.clickIfLastLIstElemDisplayed(dropDownMenuGearList);
+    }
+
+    public void openDropDownMenuArrowForLastPayroll() {
+        lastPayrollCheckDate.shouldBeVisible();
+        basicInteractions.clickIfLastLIstElemDisplayed(dropDownMenuArrowList);
+    }
+
+    public void selectCreatePayrollChecks(){
+        basicInteractions.ifElementEnabled(createPayrollChecks, basicInteractions);
+    }
+
+    public void selectCalculateAllChecksOption(){
+        basicInteractions.ifElementEnabled(calculateAllChecks, basicInteractions);
+    }
+
+    public void selectPayrollChecksOption(){
+        basicInteractions.ifElementEnabled(payrollChecksOption, basicInteractions);
+    }
+
+    public void selectPayrollWithGivenCheckDate(String givenCheckDate){
+        basicInteractions.waitingTimeOUT(500);
+        payrollDateList.get(payrollDateList.size()-1).isDisplayed();
+        for (int i = 0; i < payrollDateList.size(); i++) {
+            if (payrollDateList.get(i).isEnabled()) {
+                if (payrollDateList.get(i).getText().equals(givenCheckDate)) {
+                    dropDownMenuArrowList.get(i).click();
+                    break;
+                } else {
+                    continue;
+                }
+            } else {
+                System.out.println("createNextPayroll is not clickable on drop-down menu");
+            }
+        }
+    }
+      /*public int getCheckNumber(String givenCheckDate) {
         payrollDateList.get(payrollDateList.size()-1).isDisplayed();
         for (int i = 0; i < payrollDateList.size(); i++) {
             if (payrollDateList.get(i).isEnabled()) {
@@ -164,12 +178,28 @@ public class PayrollPage extends PageObject {
             } else {
                 System.out.println("createNextPayroll is not clickable on drop-down menu");
             }
-         }
+        }
         return checkNumber;
-    }
+    }*/
+
+    /*public void openDropDownMenuArrow() {
+        dropDownMenuArrowList.get(dropDownMenuArrowList.size()-1).isDisplayed();
+        for (int i = 0; i < dropDownMenuArrowList.size(); i++) {
+            if (i==checkNumber) {
+                if (firstPayrollCheckDate.isDisplayed()) {
+                    dropDownMenuArrowList.get(i).click();
+                } else {
+                    System.out.println("firstPayrollCheckDate is not Displayed");
+                }
+                break;
+            } else {
+                continue;
+            }
+        }
+    }*/
 
     public void openDropDownMenuArrow() {
-        firstPayrollCheckDate.shouldBeVisible();
+        dropDownMenuArrowList.get(dropDownMenuArrowList.size()-1).isDisplayed();
         for (int i = 0; i < dropDownMenuArrowList.size(); i++) {
             if (i==checkNumber) {
                 if (firstPayrollCheckDate.isDisplayed()) {
@@ -184,35 +214,6 @@ public class PayrollPage extends PageObject {
         }
     }
 
-    public void openDropDownMenuGearForLastPayroll() {
-        lastPayrollCheckDate.shouldBeVisible();
-        if (dropDownMenuGearList.get(0).isDisplayed()) {
-            dropDownMenuGearList.get(0).click();
-        } else {
-            System.out.println("dropDownMenuGearList for last payroll is not clickable");
-        }
-    }
-
-    public void selectCreatePayrollChecks(){
-        basicInteractions.ifElementDisplayed(createPayrollChecks, basicInteractions);
-    }
-
-    public void selectCalculateAllChecksOption(){
-        basicInteractions.ifElementDisplayed(calculateAllChecks, basicInteractions);
-    }
-
-    public void selectPayrollChecks(){
-        basicInteractions.ifElementDisplayed(payrollChecksOption, basicInteractions);
-    }
-
-    public void verifyCheckDate(String givenCheckDate) {
-        if (payrollDateList.get(payrollDateList.size()-1).isDisplayed()){
-            System.out.println("chosenCheckDate " + chosenCheckDate + " givenCheckDate " + givenCheckDate);
-            Assert.assertEquals(chosenCheckDate, givenCheckDate);
-        } else {
-            System.out.println("Last payroll is not displayed on the screen");
-        }
-    }
 
     public void selectNewPayrollDates() {
         basicInteractions.waitingTimeOUT(2000);
@@ -228,7 +229,7 @@ public class PayrollPage extends PageObject {
     public void getsPayFrequency() {
         waitForPresenceOf
                 ("//section[@id='main-container']//div[@data-fragment='forms/payroll/list']//tr/td[5]");
-        payFrequency = payrollPayFrequencyList.get(0).getText();
+        payFrequency = payFrequencyList.get(0).getText();
         System.out.println("payFrequency " + payFrequency);
     }
 
@@ -243,14 +244,25 @@ public class PayrollPage extends PageObject {
         return convertedDate;
     }
 
+    public void verifyPayFrequencyForLastPayroll(String payFrequency) {
+        basicInteractions.assertEqualsIfListElementEnabled(payFrequency, payFrequencyList
+                                            , 0, basicInteractions);
+    }
+
+    public void verifyPayFrequency(String payFrequency) {
+        basicInteractions.assertEqualsIfListElementEnabled(payFrequency, payFrequencyList
+                                            , checkNumber, basicInteractions);
+    }
+
     public void verifyTimeDifference(){
         Date date1 = transformToDate(lastPayCheckDate);
         Date date2 = transformToDate(newPayCheckDate);
         int days = Days.daysBetween(new DateTime(date1), new DateTime(date2)).getDays();
 
         Integer daysForTr = new Integer(days);
-
         System.out.println(days + " days");
+
+
         if (payFrequency.equals("Weekly")) {
             Assert.assertEquals(days, 7);
         } else if (payFrequency.equals("Every Two Weeks")) {
@@ -261,8 +273,11 @@ public class PayrollPage extends PageObject {
                     containsString("31"),
                     containsString("28"),
                     containsString("29")));
-        } else {
-            System.out.print("Incorrect condition");
+        } else if (payFrequency.equals("Daily")) {
+            Assert.assertEquals(days, 1);
+        }
+        else {
+            System.out.println("Incorrect condition");
         }
     }
 
@@ -274,30 +289,36 @@ public class PayrollPage extends PageObject {
         String expPeriodBeginDate = date.format(cal.getTime());
 
         Assert.assertEquals(expPeriodBeginDate, newPeriodBeginDate);
-
         System.out.println("newPeriodBeginDate " + newPeriodBeginDate);
         System.out.println("expPeriodBeginDate " + expPeriodBeginDate);
+
     }
 
     public void verifyPeriodEndDate() throws ParseException {
         Calendar cal = Calendar.getInstance();
         DateFormat date = new SimpleDateFormat("MM/dd/yyyy");
-        cal.setTime(date.parse(newPeriodBeginDate));
+        cal.setTime(date.parse(lastPeriodEndDate));
+
         if (payFrequency.equals("Weekly")) {
-            cal.add(Calendar.DATE, 6 );
+            cal.add(Calendar.DATE, 7);
             String expPeriodEndDate = date.format(cal.getTime());
             Assert.assertEquals(expPeriodEndDate, newPeriodEndDate);
             System.out.println("newPeriodEndDate " + newPeriodEndDate);
             System.out.println("expPeriodEndDate " + expPeriodEndDate);
         } else if (payFrequency.equals("Every Two Weeks")) {
-            cal.add(Calendar.DATE, 13 );
+            cal.add(Calendar.DATE, 14);
             String expPeriodEndDate = date.format(cal.getTime());
             Assert.assertEquals(expPeriodEndDate, newPeriodEndDate);
             System.out.println("newPeriodEndDate " + newPeriodEndDate);
             System.out.println("expPeriodEndDate " + expPeriodEndDate);
         } else if (payFrequency.equals("Monthly")) {
             cal.add(Calendar.MONTH, 1 );
-            cal.add(Calendar.DATE, -1 );
+            String expPeriodEndDate = date.format(cal.getTime());
+            Assert.assertEquals(expPeriodEndDate, newPeriodEndDate);
+            System.out.println("newPeriodEndDate " + newPeriodEndDate);
+            System.out.println("expPeriodEndDate " + expPeriodEndDate);
+        } else if (payFrequency.equals("Daily")) {
+            cal.add(Calendar.DATE, 1 );
             String expPeriodEndDate = date.format(cal.getTime());
             Assert.assertEquals(expPeriodEndDate, newPeriodEndDate);
             System.out.println("newPeriodEndDate " + newPeriodEndDate);
@@ -342,7 +363,7 @@ public class PayrollPage extends PageObject {
             cal.setTime(date.parse(lastPeriodEndDate));
             cal.add(Calendar.DATE, 1 );
             estNewPeriodBeginDate = date.format(cal.getTime());
-            System.out.println("estNewPeriodBeginDate "+estNewPeriodBeginDate);
+            //System.out.println("estNewPeriodBeginDate "+estNewPeriodBeginDate);
         } else {
             System.out.println("Last payroll is not displayed on the screen");
         }
@@ -355,12 +376,48 @@ public class PayrollPage extends PageObject {
             cal.setTime(date.parse(lastPeriodEndDate));
             cal.add(Calendar.DATE, 7 );
             estNewPeriodEndDate = date.format(cal.getTime());
-            System.out.println("estNewPeriodEndDate "+estNewPeriodEndDate);
-
+            //System.out.println("estNewPeriodEndDate "+estNewPeriodEndDate);
         } else {
             System.out.println("Last payroll is not displayed on the screen");
         }
     }
 
+    public void selectPayrollWithGivenDate(String givenCheckDate) {
+        basicInteractions.waitingTimeOUT(1500);
+        pagesNumber.shouldBeCurrentlyVisible();
+        numberOfPages = pagesNumber.getText();
 
+        String chosenCheckDate = " ";
+
+        int pages = Integer.parseInt(numberOfPages);
+        for (int i = 0; i < pages; i++) {
+            basicInteractions.waitingTimeOUT(1500);
+                if (payrollDateList.get(payrollDateList.size()-1).isEnabled()){
+                    for (int j = 0; j < payrollDateList.size(); j++) {
+                        if (payrollDateList.get(j).getText().equals(givenCheckDate)) {
+                            chosenCheckDate = payrollDateList.get(j).getText();
+                            payFrequency = payFrequencyList.get(j).getText();
+                            dropDownMenuArrowList.get(j).click();
+                            checkNumber = j;
+                            break;
+                        } else {
+                            continue;
+                        }
+                    }
+                    if (chosenCheckDate.equals(" ")){
+                        nextButton.click();
+                        continue;
+                    } else {
+                        break;
+                    }
+                } else {
+                    System.out.println("Last element of list is not enabled");
+                }
+        }
+    }
+
+    public void clickCalculateNewPayroll() {
+        basicInteractions.waitingTimeOUT(1000);
+        startNewPayrollButton.click();
+    }
 }

@@ -18,19 +18,18 @@ public class LoginPage extends PageObject {
     @FindBy(xpath="//div/form/button")
     WebElementFacade singIn;
 
-    BasicInteractions basicInteractions;
+    //BasicInteractions basicInteractions;
 
     @Step
-    public void typeUserName(String text){
+    public void typeUserName(String usName){
         waitForPresenceOf("//div/form/button");
-        userName.sendKeys(text);
+        userName.sendKeys(usName);
     }
 
     @Step
-    public void typePassword(String text) { password.sendKeys(text);}
+    public void typePassword(String passWD) { password.sendKeys(passWD);}
 
     @Step
-    public void clickSubmit(){
-        basicInteractions.ifElementDisplayed(singIn, basicInteractions);
+    public void clickSubmit(){BasicInteractions.clickIfElementEnabled(singIn);
     }
 }

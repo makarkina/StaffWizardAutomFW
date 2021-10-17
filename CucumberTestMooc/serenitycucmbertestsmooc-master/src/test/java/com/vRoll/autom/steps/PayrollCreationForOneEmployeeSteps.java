@@ -1,7 +1,6 @@
 package com.vRoll.autom.steps;
 
-import com.vRoll.autom.pages.LoginPage;
-import com.vRoll.autom.pages.MainPage;
+import com.vRoll.autom.forms.EditPayrollCheckDetails;
 import com.vRoll.autom.pages.PayrollPage;
 import com.vRoll.autom.forms.AddPayrollForm;
 import cucumber.api.java.en.Then;
@@ -12,11 +11,22 @@ public class PayrollCreationForOneEmployeeSteps {
 
     PayrollPage payrollPage;
     AddPayrollForm addPayrollForm;
+    EditPayrollCheckDetails editPayrollCheckDetails;
 
     @Step
     @When("^user creates new payroll on Payroll screen$")
     public void userCreatesNewPayroll() throws Exception {
-        payrollPage.addNewPayroll();
+        //payrollPage.addNewPayroll();
+        payrollPage.clickCalculateNewPayroll();
+    }
+
+    @Step
+    @Then("^user creates new payroll for given dates$")
+    public void userCreatesNewPayrollForGivenDates() throws Exception {
+        payrollPage.getBeginDateForNewPayroll();
+        payrollPage.getEndDateForNewPayroll();
+        payrollPage.clickCalculateNewPayroll();
+        addPayrollForm.enterDatesToNewPayrollForm();
     }
 
     @Step
@@ -42,21 +52,31 @@ public class PayrollCreationForOneEmployeeSteps {
     @Step
     @Then ("user selects Payroll with (.*) on Payroll screen")
     public void userSelectsPayroll(String givenCheckDate) throws Exception {
-        payrollPage.getCheckNumber(givenCheckDate);
+        payrollPage.selectPayrollWithGivenCheckDate(givenCheckDate);
     }
 
     @Step
     @Then ("user verifies check date for (.*)")
     public void userVerifiesCheckDate(String givenCheckDate) throws Exception {
-        payrollPage.verifyCheckDate(givenCheckDate);
+        editPayrollCheckDetails.verifyCheckDate(givenCheckDate);
+    }
+
+    @Step
+    @Then ("user opens dropdown list on Payroll page")
+    public void userOpensDropDownList() throws Exception {
+        payrollPage.openDropDownMenuArrow();
     }
 
     @Step
     @Then ("user selects Payroll Check option")
     public void userSelectsPayrollCheck() throws Exception {
-        payrollPage.openDropDownMenuArrow();
-        payrollPage.selectPayrollChecks();
+         payrollPage.selectPayrollChecksOption();
     }
 
+    @Step
+    @Then ("user creates new payroll for given dates depending on (.*)")
+    public void userCreatesNewPayrollForGivenDates(String payFrequency) throws Exception {
+        //payrollPage.createNewPayrollForGivenDates(payFrequency);
+    }
 
 }

@@ -59,7 +59,7 @@ public class AddPayrollForm extends PageObject {
 
     public void saveNewPayroll(){
         //assertThat(savePayrollButton.isEnabled(), equalTo(true));
-        basicInteractions.ifElementDisplayed(savePayrollButton, basicInteractions);
+        basicInteractions.ifElementEnabled(savePayrollButton, basicInteractions);
+        basicInteractions.waitingTimeOUT(1000);
     }
-
 }

@@ -3,28 +3,30 @@ package com.vRoll.autom.forms;
 import com.vRoll.autom.actions.webElemInteractions.BasicInteractions;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
-import javax.validation.constraints.AssertTrue;
+
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class EditPayrollCheckDetails extends PageObject {
 
     @FindBy(xpath =
-            "//div[@class='row'][1]//div[@class='col-2'][1]//input[@readonly='readonly']")
+            "//div[@class='card-header bg-lightblue text-white']")
+    WebElementFacade pageHeader;
+
+    @FindBy(xpath =
+            "//div[@meta-widget-name='checkDate']//input[@name='checkDate']")
     WebElementFacade checkDateBox;
 
     @FindBy(xpath =
-            "//div[@class='row'][1]//div[@class='col-2'][2]//input[@readonly='readonly']")
+            "//div[@class='form-group state-success']//input[@class='form-control']")
     WebElementFacade employeeIDBox;
 
     @FindBy(xpath =
-            "//div[@class='row'][2]//div[@meta-widget-name='companyEdm']//input[@type='text']")
+            "//div[@meta-widget-name='companyEdm']//input[@type='text']")
     WebElementFacade earnDedBox;
 
     @FindBy(xpath =
@@ -35,11 +37,7 @@ public class EditPayrollCheckDetails extends PageObject {
             "/div[@class='col-4'][3]//input[@readonly='readonly']")
     WebElementFacade typeBox;
 
-    @FindBy(xpath =
-            "//div[@class='row'][1]//div[@class='col-3'][2]//input[@readonly='readonly']")
-    WebElementFacade lastNameBox;
-
-    @FindBy(xpath =
+   @FindBy(xpath =
             "//div[@meta-widget-name='hours']//input")
     WebElementFacade hoursBox;
 
@@ -48,7 +46,7 @@ public class EditPayrollCheckDetails extends PageObject {
     WebElementFacade payRateBox;
 
     @FindBy(xpath =
-            "//div[@class='row'][5]//div[@class='col-3'][3]//input[@readonly='readonly']")
+            "//div[@meta-widget-name='rateNumber']//input")
     WebElementFacade rateNumberBox;
 
     @FindBy(xpath =
@@ -61,31 +59,23 @@ public class EditPayrollCheckDetails extends PageObject {
     BasicInteractions basicInteractions;
 
     public void verifyNewCheckDetails(String state, String amount) {
-        basicInteractions.ifElementDisplayed(amountBox, basicInteractions);
+        basicInteractions.waitingTimeOUT(500);
+        basicInteractions.assertEqualsIfElementEnabled(state, stateBox, basicInteractions);
+        basicInteractions.assertEqualsIfElementEnabled(amount, amountBox, basicInteractions);
     }
 
-    public void verifyHourlyEarning(String checkDate, String employeeID, String earning,
+    public void verifyCheckDate(String givenCheckDate){
+        basicInteractions.waitingTimeOUT(1000);
+        basicInteractions.assertContainsIfElementEnabled(givenCheckDate, checkDateBox, basicInteractions);
+    }
+    public void verifyEarning(String employeeName, String earnings,
                                     String state, String hours, String payRate, String amount) {
-        amountBox.shouldBeVisible();
-
-        Assert.assertTrue(checkDateBox.getValue().contains(checkDate));
-        Assert.assertTrue(employeeIDBox.getValue().contains(employeeID));
-
-        if (earning.equals("Hourly")) {
-            /*Assert.assertTrue(earnDedBox.getValue().contains(earning));
-            Assert.assertTrue(stateBox.getValue().contains(state));
-            Assert.assertTrue(hoursBox.getValue().contains(hours));
-            Assert.assertTrue(payRateBox.getValue().contains(payRate));
-            Assert.assertTrue(amountBox.getValue().contains(amount));*/
-            assertThat(earnDedBox.getAttribute("value"), equalTo(earning));
-            assertThat(stateBox.getAttribute("value"), equalTo(state));
-            assertThat(hoursBox.getAttribute("value"), equalTo(hours));
-            assertThat(payRateBox.getAttribute("value"), equalTo(payRate));
-            assertThat(amountBox.getAttribute("value"), equalTo(amount));
-        } else {
-            Assert.assertTrue(earnDedBox.getValue().contains(earning));
-            Assert.assertTrue(stateBox.getValue().contains(state));
-            Assert.assertTrue(amountBox.getValue().contains(amount));
-        }
+        //basicInteractions.assertContainsIfElementEnabled(employeeName, pageHeader, basicInteractions);
+        basicInteractions.assertContainsTextIfElementEnabled(employeeName, pageHeader, basicInteractions);
+        basicInteractions.assertContainsIfElementEnabled(earnings, earnDedBox, basicInteractions);
+        basicInteractions.assertContainsIfElementEnabled(state, stateBox, basicInteractions);
+        basicInteractions.assertContainsIfElementEnabled(hours, hoursBox, basicInteractions);
+        basicInteractions.assertContainsIfElementEnabled(payRate, payRateBox, basicInteractions);
+        basicInteractions.assertContainsIfElementEnabled(amount, amountBox, basicInteractions);
     }
 }

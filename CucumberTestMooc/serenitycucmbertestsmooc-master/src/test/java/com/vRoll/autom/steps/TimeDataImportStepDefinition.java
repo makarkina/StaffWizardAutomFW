@@ -12,7 +12,7 @@ public class TimeDataImportStepDefinition {
     MainPage mainPage;
     CompanyPage companyPage;
     CompanyScreen companyScreen;
-    EmployeePage employeePage;
+    //EmployeePage employeePage;
 
 
     @Step
@@ -25,7 +25,7 @@ public class TimeDataImportStepDefinition {
     @Step
     @Then("^user selects Payroll checks on Employees page$")
     public void userSelectsPayrollChecks(){
-        employeePage.clickOnChoosingOptions();
+        //employeePage.clickOnChoosingOptions();
         //employeePage.selectPayrollCheck();
     }
 }

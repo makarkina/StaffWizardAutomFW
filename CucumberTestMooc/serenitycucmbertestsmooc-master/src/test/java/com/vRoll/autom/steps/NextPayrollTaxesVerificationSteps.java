@@ -10,7 +10,7 @@ import com.vRoll.autom.pages.PayrollChecksPage;
 
 public class NextPayrollTaxesVerificationSteps {
 
-    PayrollChecksPage payrollChecksPage;
+    //PayrollChecksPage payrollChecksPage;
     EditPayrollCheck editPayrollCheck;
     EditPayrollCheckState editPayrollCheckState;
 
@@ -28,4 +28,5 @@ public class NextPayrollTaxesVerificationSteps {
         editPayrollCheckState.verifyStateTaxes(stateTax, eeSdiTax);
 
     }
+
 }

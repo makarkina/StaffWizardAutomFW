@@ -36,18 +36,6 @@ public class CompanyPage extends PageObject {
     @FindAll(@FindBy(xpath = "//table[@class='table table-hover list-table']//tbody[@class='list-items']//tr"))
     List<WebElement> allElements;
 
-
-
-    /*public List<String> getCompanies() {
-        return findAll("//tbody[@class='list-items']//tr").stream()
-                .map(WebElementFacade::getText)
-                .collect(Collectors.toList());
-    }*/
-
-    /*for (int i = 0; i < allElements.size(); i++) {
-        System.out.println(list.get(i));
-    }*/
-
     public void addNewCompany(){
         addCompanySign.click();
     }
