@@ -8,8 +8,8 @@ Feature:
   Scenario Outline: verification of ED amounts for last payroll date
 
     When user selects Payrolls mode on Main page
-    And user gets last payroll date
-    And user gets pay frequency
+    Then user gets last payroll date
+    And user verifies a pay frequency for last payroll <Pay Frequency>
 
     And user opens dropdown list for last payroll
     And user selects Payroll Check option
@@ -18,14 +18,14 @@ Feature:
     And user verifies amount for Earning/Deduction <DD>, <CS>, <Levy>, <Garnishment>, <Pension>, <Hourly>, <Salary>, <Overtime>
 
     Examples:
-      | Given Employee | DD      | CS     | Levy   |Garnishment|Pension| Hourly | Salary | Overtime |
-      | Brown          | 476.18  |        |        |           |       | 600.00 |        |          |
-      | Black          | 219.34  | 100    |        |           |       | 400.00 |        |          |
-      | Armstrong      | 729.55  | 100    |        |           |       |        |1153.85 |          |
-      | Red            | 252.86  |        |        |  100      |       | 400.00 |        |          |
-      | Green          | 435.67  |        |  100   |           |       | 680.00 |        |          |
-      | McDown         | 813.05  |        |        |  100      |       |         |1153.85|          |
-      | Yellow         | 386.40  | 100    |        |  100      | 18    | 600.00 |        |          |
-      | Purple         | 493.48  | 100    |        |  100      | 10    | 860.00 |        |          |
-      | Douglass       | 951.97  |        |        |           |       | 1153.85|        |          |
-      | White          | 525.43  |        |        |           |       | 660.00 |        |          |
+    |Pay Frequency| Given Employee | DD      | CS     | Levy   |Garnishment|Pension| Hourly | Salary | Overtime |
+    |Weekly       | Brown          | 476.18  |        |        |           |       | 600.00 |        |          |
+    |Weekly       | Black          | 219.34  | 100    |        |           |       | 400.00 |        |          |
+    |Weekly       | Armstrong      | 729.55  | 100    |        |           |       |        |1153.85 |          |
+    |Weekly       | Red            | 252.86  |        |        |  100      |       | 400.00 |        |          |
+    |Weekly       | Green          | 435.67  |        |  100   |           |       | 680.00 |        |          |
+    |Weekly       | McDown         | 813.05  |        |        |  100      |       |         |1153.85|          |
+    |Weekly       | Yellow         | 386.40  | 100    |        |  100      | 18    | 600.00 |        |          |
+    |Weekly       | Purple         | 493.48  | 100    |        |  100      | 10    | 860.00 |        |          |
+    |Weekly       | Douglass       | 951.97  |        |        |           |       | 1153.85|        |          |
+    |Weekly       | White          | 525.43  |        |        |           |       | 660.00 |        |          |

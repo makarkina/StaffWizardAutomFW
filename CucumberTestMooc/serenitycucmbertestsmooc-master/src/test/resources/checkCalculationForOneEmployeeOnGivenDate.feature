@@ -32,10 +32,10 @@ Feature:
 
     Examples:
       |Given Pay Frequency| Check date   | Period begin date  | Period end date  | Given Check date | Given Employee    |Gross Wages| Net Wages |
-      |Weekly             | 09/11/2024   | 09052024           | 09112024         | 09/11/2024       | Victor Green      | 680.00    | 0.00      |
-      |Weekly             | 02/04/2025   | 01292025           | 02042025         | 02/04/2025       | Louis j Armstrong | 1153.85   | 0.00      |
-      |Every Two Weeks    | 02/18/2025   | 02052025           | 02182025         | 02/18/2025       | Victoria McDown   | 2307.69   | 0.00      |
-      |Monthly            | 03/19/2025   | 02192025           | 03192025         | 03/19/2025       | Frederick Douglass| 5000.00   | 0.00      |
+      |Weekly             | 09/11/2024   | 09052024           | 09112024         | 09/11/2024       | George J Yellow   | 600.00    | 0.00      |
+      |Weekly             | 06/19/2024   | 06132024           | 06192024         | 06/19/2024       | Olga Red          | 400.00    | 0.00      |
+
+
 
 
 

@@ -10,7 +10,7 @@ Feature:
   Scenario Outline: verification of earning details for last payroll
 
     Then user gets last payroll date
-    And user gets pay frequency
+    And user verifies a pay frequency for last payroll <Pay Frequency>
     And user opens dropdown list for last payroll
     And user selects Payroll Check option
 
@@ -18,12 +18,11 @@ Feature:
     And user clicks Payroll Check Details Tab
 
     Then user opens Edit Payroll Check for given ED <Earning>
-    And user verifies earning for <Employee ID>, <Earning>, <State>, <Hours>, <Pay Rate>, <Amount>
-
+    And user verifies earning for <Given Employee>, <Earning>, <State>, <Hours>, <Pay Rate>, <Amount>
 
     Examples:
-      |Given Employee    |Employee ID|Earning       |State|Hours   |Pay Rate |Amount    |
-      |John Brown        |EmpID#1    |Regular hours |CA   |40.00   |15.00    |680       |
-      |Louis J Armstrong |EmpID#3    |Salary        |CT   |        |         |1153.85   |
+      |Pay Frequency|Given Employee |Earning       |State|Hours   |Pay Rate |Amount    |
+      |Weekly       |Brown          |Regular hours |CA   |40.00   |15.00    |600.00    |
+      |Weekly       |Armstrong      |Salary        |CT   |        |         |1153.85   |
 
 

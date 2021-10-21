@@ -85,7 +85,7 @@ public class PayrollChecksPage extends PageObject {
     }
 
     public void clickEditButtonForGivenEmployee(String givenEmployee) {
-        basicInteractions.waitingTimeOUT(2000);
+        basicInteractions.waitingTimeOUT(1500);
         basicInteractions.clickDifElementIfElemWithParamDisplayed(givenEmployee, employeesList
                                     , basicInteractions, editButtonList);
     }

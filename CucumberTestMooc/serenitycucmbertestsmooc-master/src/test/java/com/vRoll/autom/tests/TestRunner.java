@@ -5,7 +5,7 @@ import net.serenitybdd.cucumber.CucumberWithSerenity;
 import org.junit.runner.RunWith;
 
 @RunWith(CucumberWithSerenity.class)
-@CucumberOptions(features = "src/test/resources/newCheckDetailsVerificationOnGivenDate.feature",
+@CucumberOptions(features = "src/test/resources/newCheckDetailsVerificationForLastPayroll.feature",
                     glue = "com.vRoll.autom.steps")
 
 public class TestRunner {

@@ -140,6 +140,8 @@ public class BasicInteractions {
     public static boolean assertEqualsIfListElementEnabled(String parameter, List<WebElement> list, int i, BasicInteractions basicInteractions) {
         if (list.get(list.size() - 1).isEnabled()) {
             if (list.get(i).getText().equals(parameter)) {
+                //System.out.println("parameter " + parameter);
+                //System.out.println("ist.get(i).getText() " + list.get(i).getText());
                 Assert.assertEquals(list.get(i).getText(), parameter);
             } else {
                 System.out.println("===================");

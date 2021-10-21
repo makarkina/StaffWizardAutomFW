@@ -70,7 +70,7 @@ public class EditPayrollCheckDetails extends PageObject {
     }
     public void verifyEarning(String employeeName, String earnings,
                                     String state, String hours, String payRate, String amount) {
-        //basicInteractions.assertContainsIfElementEnabled(employeeName, pageHeader, basicInteractions);
+        basicInteractions.waitingTimeOUT(1000);
         basicInteractions.assertContainsTextIfElementEnabled(employeeName, pageHeader, basicInteractions);
         basicInteractions.assertContainsIfElementEnabled(earnings, earnDedBox, basicInteractions);
         basicInteractions.assertContainsIfElementEnabled(state, stateBox, basicInteractions);
